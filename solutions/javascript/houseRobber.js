@@ -36,3 +36,4 @@ var houseRobber = function(houses) {
   return inclusiveMax > exclusiveMax ? inclusiveMax : exclusiveMax
 
 };
+
