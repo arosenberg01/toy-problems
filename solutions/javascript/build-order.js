@@ -40,4 +40,44 @@ var Graph = function(modules, dependencies) {
   return nodes;
 };
 
+// Takes in graph representing project and attempts to return valid build order
+var buildProject = function(project) {
+  var buildOrder = [];
+  var resolved = {};
+  var alreadySeen = {};
 
+  var resolveDependencies = function(node, buildOrder, resolved, alreadySeen) {
+
+    // If the same node is seen more than once in a dependency resolution attempt, and it hasn't been resolved already
+    // a circular dependecy exists
+    if (!resolved[node.name] && alreadySeen[node.name]) {
+      throw new Error('Circular dependecy detected!');
+    }
+
+    // Recursively resolve dependencies of each module
+    node.edges.forEach(function(edge) {
+      alreadySeen[node.name] = true;
+      resolveDependencies(edge, buildOrder, resolved, alreadySeen);
+    });
+
+    // If module hasn't already been built, add to build order and record it's existence
+    if (!resolved[node.name]) {
+      buildOrder.push(node.name);
+      resolved[node.name] = true;
+    }
+  };
+
+  // Attempt to resolve dependencies for each module
+  for (var module in project) {
+    resolveDependencies(project[module], buildOrder, resolved, alreadySeen);
+  }
+
+  return buildOrder;
+};
+
+ var validGraph = Graph(validModules, validDependencies);
+ var validBuildOrder = buildProject(validGraph);
+ console.log(validBuildOrder);
+
+ // var impossibleGraph = Graph(impossibleModules, impossibleDependencies);
+ // var impossibleBuildOrder = buildProject(impossibleGraph);
