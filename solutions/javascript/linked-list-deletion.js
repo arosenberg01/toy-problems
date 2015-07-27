@@ -67,7 +67,7 @@ var LinkedList = function(){
     var tempNode = nodeToBeDeleted.next;
     nodeToBeDeleted.value = tempNode.value;
     nodeToBeDeleted.next = tempNode.next
-    delete tempNode;
+    tempNode.next = null;
 
   };
 
