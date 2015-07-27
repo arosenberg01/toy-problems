@@ -62,14 +62,19 @@ var LinkedList = function(){
     return false;
   };
 
-  list.deleteNode = function() {
-    // WRITE CODE HERE
-  }
+  list.deleteNode = function(nodeToBeDeleted) {
+
+    var tempNode = nodeToBeDeleted.next;
+    nodeToBeDeleted.value = tempNode.value;
+    nodeToBeDeleted.next = tempNode.next
+    delete tempNode;
+
+  };
 
   return list;
 };
 
-var list = LinkedList();
+
 
 
 
