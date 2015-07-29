@@ -7,6 +7,16 @@
 #   '())('
 #
 # Hard mode: deal with (), {}, and []
+#
+# Balanced:
+#   '{{([][])}()}'
+#   '[[{{(())}}]]'
+#   '[][][](){}'
+#
+# Not balanced:
+#   '([)]'
+#   '((()]))'
+#   '[{()]'
 
 
 class Stack():
@@ -14,7 +24,7 @@ class Stack():
         self.storage = []
 
     def push(self, value):
-        self.storage.append(value)
+        self.storage.append (value)
 
     def pop(self):
         return self.storage.pop()
@@ -52,10 +62,48 @@ def is_balanced(parens):
 
     return stack.size() == 0
 
-
-
 print(is_balanced('((()))')) # --> True
 print(is_balanced('(()())')) # --> True
 print(is_balanced('((()')) # --> False
 print(is_balanced('())(')) # --> False
+
+def matches(open,close):
+    opens = "([{"
+    closers = ")]}"
+    return opens.index(open) == closers.index(close)
+
+def is_balanced_hard(parens):
+    stack = Stack()
+    opening_parens = '([{'
+    index = 0
+
+    while index < len(parens):
+        current_paren = parens[index]
+        index += 1
+
+        if current_paren in opening_parens:
+            stack.push(current_paren)
+        else:
+            top = stack.pop()
+
+            if not matches(top, current_paren):
+                return False
+
+    return stack.size() == 0
+
+
+print(is_balanced_hard('{{([][])}()}')) # --> True
+print(is_balanced_hard('[[{{(())}}]]')) # --> True
+print(is_balanced_hard('[][][](){}')) # --> True
+print(is_balanced_hard('([)]')) # --> False
+print(is_balanced_hard('((()]))')) # --> False
+print(is_balanced_hard('[{()]')) # --> False
+
+
+
+
+
+
+
+
 
