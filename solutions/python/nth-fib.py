@@ -42,3 +42,21 @@ fib = Fib_Memo()
 # print(fib.fib(4))
 print(fib.fib(5))
 
+def fib_iterative(n):
+    if n < 0:
+        raise Exception("Index was negative")
+
+    elif n in [0, 1]:
+        return n
+
+    prev = 0
+    prev_prev = 1
+
+    for _ in range(n):
+        current = prev + prev_prev
+        prev_prev = prev
+        prev = current
+
+    return current
+
+print(fib_iterative(5))
