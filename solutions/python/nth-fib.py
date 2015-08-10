@@ -42,11 +42,9 @@ fib = Fib_Memo()
 # print(fib.fib(4))
 print(fib.fib(5))
 
-def fib_iterative(n):
-    if n < 0:
-        raise Exception("Index was negative")
+def fib_iterative(n): 
 
-    elif n in [0, 1]:
+    if n <= 1:
         return n
 
     prev = 0
@@ -59,4 +57,5 @@ def fib_iterative(n):
 
     return current
 
+print(fib_iterative(4))
 print(fib_iterative(5))
